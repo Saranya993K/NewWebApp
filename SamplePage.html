@@ -1,0 +1,24 @@
+<html>
+<body onload="myFunction();" style="text-align:center;">
+    <h2>Simple Combo Selections </h2>
+	
+<form>  
+    <div>
+    <label for="Country" style="font:12px;"><b>Select Country:</b></label>  <!-- 'for' attribute describes for which 
+        control(e.g, here its for country, the name inside 'for' attribute is same as the control's id value -->
+     <select id="Country"  style="width:50%; margin-left: 14px;" onchange="populateStates(this.options[this.selectedIndex])">  </select>
+        </div>
+    <br /><div id="DivState" style="text-align:left; ">
+    <label for="States" style="font:12px; margin-left:275px;"><b>Select States:</b></label>
+    <select id="States" style="width:50%; margin-left:31px;" onchange="selectedOption();"></select>
+        </div>
+
+    <p id="display"></p>
+	<script src="script.js">
+      </script>
+</form>
+
+
+
+</body>
+</html>
