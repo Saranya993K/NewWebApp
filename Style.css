@@ -1,0 +1,33 @@
+.dropdown-test
+{
+    width:50%;
+    margin-left: 31px;
+}
+.dropdown-state {
+    margin-left: 32px !important;
+}
+.dropdown-country
+{
+    margin-left: 14px !important;
+}
+.div
+{
+    text-align: left;
+}
+.label-font
+{
+    font:12px;
+}
+.label-align
+{
+    margin-left:275px !important;
+}
+.para
+{
+        text-align: center;
+        font-size:30px;            
+}
+.textalign
+{
+    text-align: center;
+}

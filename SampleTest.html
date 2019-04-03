@@ -1,25 +1,101 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel="stylesheet" type="text/css" href="CSS/Style.css">
 </head>
-<body style="text-align:center;">
-    <form>
-    <div>
-        <label for="Country" style="font:12px;"><b>Select Country:</b></label>
-        <!-- 'for' attribute describes for which
-        control(e.g, here its for country, the name inside 'for' attribute is same as the control's id value -->
-        <select id="Country" style="width:50%; margin-left: 14px;" onchange="populateStates(this.options[this.selectedIndex])">  </select>
-    </div>
-    <br /><div id="DivState" style="text-align:left; ">
-        <label for="States" style="font:12px; margin-left:275px;"><b>Select States:</b></label>
-        <select id="States" style="width:50%; margin-left:31px;" onchange="selectedOption();"></select>
-    </div>
 
-    <p id="display"></p>
-    <script src="script.js">
-    </script>
+<body class="textalign">
+    
+    <form>
+        <div>
+            <p class="para" > <b>Simple Combo selection</b> </p>
+            <label for="Country" class="label-font"><b>Select Country:</b></label>
+            <!-- 'for' attribute describes for which
+    control(e.g, here its for country, the name inside 'for' attribute is same as the control's id value -->
+            <select id="Country" class="dropdown-test dropdown-country" onchange="populateStates(this.options[this.selectedIndex])">  </select>
+            <!--onchange="populateStates(this.options[this.selectedIndex])">  </select>-->
+        </div>
+        <br /><div id="DivState" class="div">
+            <label for="States" class="label-font label-align"><b>Select States:</b></label>
+            <select id="States" class="dropdown-test dropdown-state" onchange="selectedOption();"></select>
+        </div>
+
+        <p id="display"></p>
+        <script src="Scripts/jquery-3.3.1.js"></script>
+
+        <script type="text/javascript">
+            debugger;
+            $(document).ready(function () {
+
+                let dropdownCountry = $('#Country');
+                dropdownCountry.empty();
+
+                dropdownCountry.append('<option selected="true" disabled>Choose Country </option>');
+                dropdownCountry.prop('selectedIndex', 0);
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:50002/api/GetCountries',
+                    //data: 'username=' + username + '&password=' + password,      //passing the values as (query string) input
+                    datatype: 'json',
+                    success: function (data) {
+                        $.each(data, function (key, CountryList) {
+                        dropdownCountry.append($('<option></option>').attr('value', CountryList.CountryID).text(CountryList.CountryName));
+                    })
+                    },
+                });
+
+             
+                //$.getJSON('http://localhost:50002/api/GetCountries', function (data) {
+                //    $.each(data, function (key, CountryList) {
+                //        dropdownCountry.append($('<option></option>').attr('value', CountryList.CountryID).text(CountryList.CountryName));
+                //    })
+                //});                
+            });
+
+            function populateStates(element)
+            {
+                debugger;                
+                let dropdownState = $('#States');
+                dropdownState.empty();   
+                dropdownState.append('<option selected="true" disabled>Choose Country </option>');
+                dropdownState.prop('selectedIndex', 0);
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:50002/api/GetStates',
+                    data: 'CountryID=' +element.index,      //passing the values as (query string) input
+                    datatype: 'json',
+                    success: function (data) {
+                        $.each(data, function (key, stateList) {
+                        dropdownState.append($('<option></option>').attr('value', stateList.StateID).text(stateList.StateName));
+                    })
+                    },
+                });
+
+                //$.getJSON('http://localhost:50002/api/GetStates?CountryID='+element.index, function (data) {
+                //    $.each(data, function (key, stateList) {
+                //        dropdownState.append($('<option></option>').attr('value', stateList.StateID).text(stateList.StateName));
+                //    })
+                //});
+            
+            }
+
+            function selectedOption() {
+                debugger;
+                var countrySelected = "";
+                var stateSelected = "";
+                document.getElementById("display").innerHTML = "";
+                countrySelected = document.getElementById("Country");
+                stateSelected = document.getElementById("States");
+                var cntry = countrySelected.options[countrySelected.selectedIndex];
+                var state = stateSelected.options[stateSelected.selectedIndex];
+                document.getElementById("display").innerHTML = "<h2>Your country is  " + cntry.innerHTML + "  " + "State is " + state.innerHTML + "</h2>";
+
+            } 
+        </script>
     </form>
 
 </body>
