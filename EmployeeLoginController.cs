@@ -60,10 +60,15 @@ namespace TestAPIApp.Controllers
             {
                 DBManager db = new DBManager();
                 List<Country> countries = new List<Country>();
-                return countries = db.GetCountries();
+                var CountrList = db.GetCountries();
+
+                if (CountrList != null)
+                { countries = CountrList; }
+
+                    return countries;
             }
-            catch
-            {   throw;  }
+            catch (Exception)
+            { return null; }
 
             #region oldStuff
             //string constr = ConfigurationManager.ConnectionStrings["Connstring"].ConnectionString;
